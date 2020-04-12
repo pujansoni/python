@@ -1,0 +1,17 @@
+In the case of dictionary, the key is a stirng and the syntax is [key]. In the case of the module, the key is an identifier, and the syntax is .key. Other than that they are nearly the same thing.
+You can think about a module as a specialized dictionary that can store Python code so you can access it with the . operator. Python also has another construct that serves a similar purpose called a class. A class is a way to take a grouping of functions and data and place them inside a container so you can access them with the .(dot) operator.
+Here's why classes are used instead of modules. You can take this MyStuff class and use it to craft many of them, millions at a time if you want, and each one won't interfere with each other. When you import a module there is only one for the entire program unless you do some monster hacks.
+If a class is like a "mini-module", then there has to be a concept similar to import but for classes. That concept is called "instantiate", which is just a fancy, obnoxious, overly smart way to say "create". When you instantiate a class what you get is called an object.
+We now have three ways to get things from things
+Ex:
+#dict style
+mystuff['apples']
+
+#module style
+mystuff.apples()
+print(mystuff.tangerine)
+
+#class style
+thing = MyStuff()
+thing.apples()
+print(thing.tangerine)
