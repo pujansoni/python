@@ -1,13 +1,19 @@
-from collections.abc import Sequence
+from bisect import bisect_left
+from collections.abc import Sequence, Set
 from itertools import chain
 
-class SortedSet(Sequence):
+
+class SortedSet(Sequence, Set):
 
     def __init__(self, items=None):
         self._items = sorted(set(items)) if items is not None else []
 
     def __contains__(self, item):
-        return item in self._items
+        try:
+            self.index(item)
+            return True
+        except ValueError:
+            return False
 
     def __len__(self):
         return len(self._items)
@@ -34,10 +40,14 @@ class SortedSet(Sequence):
             return NotImplemented
         return self._items != rhs._items
 
-    def count(self, item):
+    def index(self, item):
         index = bisect_left(self._items, item)
-        found = (index != len(self._items)) and (self._items[index] == item)
-        return int[found]
+        if (index != len(self._items)) and (self._items[index] == item):
+            return index
+        raise ValueError("{} not found".format(repr(item)))
+
+    def count(self, item):
+        return int(item in self)
 
     def __add__(self, rhs):
         return SortedSet(chain(self._items, rhs._items))
@@ -47,3 +57,24 @@ class SortedSet(Sequence):
 
     def __rmul__(self, lhs):
         return self * lhs
+
+    def issubset(self, iterable):
+        return self <= SortedSet(iterable)
+
+    def issuperset(self, iterable):
+        return self >= SortedSet(iterable)
+
+    def intersection(self, iterable):
+        return self & SortedSet(iterable)
+
+    def union(self, iterable):
+        return self | SortedSet(iterable)
+
+    def symmetric_difference(self, iterable):
+        return self ^ SortedSet(iterable)
+
+    def difference(self, iterable):
+        return self - SortedSet(iterable)
+
+
+
