@@ -6,5 +6,5 @@ def escape_unicode(f):
     return wrap
 
 @escape_unicode
-def northern city():
+def northern_city():
     return 'Troms@'
